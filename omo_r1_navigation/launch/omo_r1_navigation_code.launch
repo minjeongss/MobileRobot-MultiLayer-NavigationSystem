@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="omo_r1_navigation" type="move_to_goal_node.py" name="move_to_goal_node" output="screen">
+    <!-- Add any parameters or arguments if needed -->
+  </node>
+</launch>
