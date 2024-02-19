@@ -34,6 +34,7 @@ if os.name == 'nt':
   import msvcrt
 else:
   import tty, termios
+from datetime import datetime
 
 OMO_R1_MAX_LIN_VEL = 1.20
 OMO_R1_MAX_ANG_VEL = 1.80

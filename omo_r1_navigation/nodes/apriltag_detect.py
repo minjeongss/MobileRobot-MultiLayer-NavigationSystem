@@ -45,9 +45,7 @@ class ApriltagDetector:
 
     def tag_callback(self,data):
         global flag
-        if not data.detections:
-            rospy.logwarn("[ERROR] No AprilTag detect!")
-        else:
+        if data.detections:
             # AprilTag 정보 받아오는 부분
             tag=data.detections[0]
             tag_id=tag.id[0]
@@ -59,9 +57,11 @@ class ApriltagDetector:
             # AprilTag 인식해 multi floor 구현
             if(tag_id==0):
                 if flag==0:
+                    self.kill_ros_node('/robot_state_publisher')
                     self.kill_ros_node('/map_server')
-                    roslaunch_command = "roslaunch omo_r1_navigation omo_r1_navigation_G2.launch map_file:='/home/minjeong/catkin_ws/src/omo_r1_navigation/maps/map6f.yaml'"
+                    roslaunch_command = "roslaunch omo_r1_navigation omo_r1_navigation_G2.launch map_file:='/home/minjeong/catkin_ws/src/omo_r1_navigation/maps/map3f.yaml'"
                     try:
+                    	 #subprocess.Popen("rosrun robot_state_publisher robot_state_publisher", shell=True)
                         subprocess.Popen(roslaunch_command, shell=True)
                         flag=1
                     except Exception as e:
@@ -71,7 +71,7 @@ class ApriltagDetector:
             elif(tag_id==1):
                 if flag==1:
                     self.kill_ros_node('/map_server')
-                    roslaunch_command = "roslaunch omo_r1_navigation omo_r1_navigation_G2.launch map_file:='/home/minjeong/catkin_ws/src/omo_r1_navigation/maps/map3f.yaml'"
+                    roslaunch_command = "roslaunch omo_r1_navigation omo_r1_navigation_G2.launch map_file:='/home/minjeong/catkin_ws/src/omo_r1_navigation/maps/map.yaml'"
                     try:
                         subprocess.Popen(roslaunch_command, shell=True)
                         flag=2
