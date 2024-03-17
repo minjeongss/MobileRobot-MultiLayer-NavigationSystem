@@ -1,0 +1,32 @@
+<launch>
+  <arg name="robot_ip" />
+  <arg name="robot_dof" />
+  <arg name="robot_type" />
+  <arg name="no_gui_plan" />
+  
+  <!-- launch realsense camera -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <!-- <arg name="filters" value="pointcloud" /> -->
+    <arg name="align_depth" value="true" />
+    <arg name="publish_tf" value="true" />
+    <!-- <arg name="enable_sync" default="true"/> -->
+  </include>
+
+  <!-- launch find_object_2d with gui -->
+  <include file="$(find apriltag_ros)/launch/continuous_detection.launch" />
+
+  <!-- launch xArm moveit simple planner -->
+  <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
+    <arg name="robot_ip" value="$(arg robot_ip)" />
+    <arg name="robot_dof" value="$(arg robot_dof)" />
+    <arg name="robot_type" value="$(arg robot_type)" />
+    <arg name="add_realsense_d435i" value="true" />
+    <arg name="add_d435i_links" value="true" />
+    <arg name="add_gripper" value="true" />
+    <arg name="no_gui_plan" value="$(arg no_gui_plan)" />
+  </include>
+
+  <!-- publish extrinsics -->
+  <include file="$(find d435i_xarm_setup)/launch/publish_handeye_tf_lite6.launch" />
+
+</launch>
