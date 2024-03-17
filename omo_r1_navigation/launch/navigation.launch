@@ -1,0 +1,7 @@
+<launch>
+  <include file="$(find omo_r1_bringup)/launch/omo_r1_robot_G2.launch"/>
+  <include file="$(find omo_r1_navigation)/launch/omo_r1_navigation_G2.launch"/>
+
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+  <include file="$(find apriltag_ros)/launch/continuous_detection.launch"/>
+</launch>
