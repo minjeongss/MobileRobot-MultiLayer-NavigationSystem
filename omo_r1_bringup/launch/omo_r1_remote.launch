@@ -1,4 +1,6 @@
 <launch>
+<group ns="omo">
+
   <include file="$(find omo_r1_bringup)/launch/includes/description.launch.xml"/>
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
@@ -10,4 +12,6 @@
     <param name="use_gui" value="false"/>
     <param name="rate" value="50"/>
   </node>
+  
+</group>
 </launch>

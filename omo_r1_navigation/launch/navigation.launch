@@ -1,7 +1,57 @@
 <launch>
-  <include file="$(find omo_r1_bringup)/launch/omo_r1_robot_G2.launch"/>
-  <include file="$(find omo_r1_navigation)/launch/omo_r1_navigation_G2.launch"/>
+  <!-- Realsense 카메라 설정, camera1과 camera2로 구분 -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="camera" value="camera1" />
+    <arg name="serial_no" value="141722076596" />
+    <arg name="align_depth" value="true" />
+    <arg name="publish_tf" value="true" />
+  </include>
+  
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="camera" value="camera2" />
+    <arg name="serial_no" value="151422255139" />
+    <arg name="align_depth" value="true" />
+    <arg name="publish_tf" value="true" />
+  </include>
+    <!-- Apriltag detection -->
+  <include file="$(find apriltag_ros)/launch/continuous_detection.launch" />
 
-  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
-  <include file="$(find apriltag_ros)/launch/continuous_detection.launch"/>
+  <!-- d435i_xarm_setup 설정 -->
+  <arg name="robot_ip" default="192.168.1.178" />
+  <arg name="robot_dof" default="6" />
+  <arg name="robot_type" default="lite" />
+  <arg name="no_gui_plan" default="false" />
+  
+  <!-- YOLOv5와 xArm 설정 -->
+  <include file="$(find yolov5_ros)/launch/yolov5.launch">
+    <arg name="weights" value="/home/jmlee/catkin_ws/src/yolov5_ros/src/yolov5/best.pt" />
+  </include>
+  
+  <include file="$(find xarm_planner)/launch/xarm_planner_realHW.launch">
+    <arg name="robot_ip" value="$(arg robot_ip)" />
+    <arg name="robot_dof" value="$(arg robot_dof)" />
+    <arg name="robot_type" value="$(arg robot_type)" />
+    <arg name="add_realsense_d435i" value="true" />
+    <arg name="add_d435i_links" value="true" />
+    <arg name="add_gripper" value="true" />
+    <arg name="no_gui_plan" value="$(arg no_gui_plan)" />
+  </include>
+  
+  <include file="$(find d435i_xarm_setup)/launch/publish_handeye_tf_lite6.launch" />
+
+  <!-- omo_r1_robot_G2.launch 실행 -->
+  <include file="$(find omo_r1_bringup)/launch/omo_r1_robot_G2.launch"/>
+
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_link_base" args="-0.295 -0.15 0.9 0 0 0 base_link link_base 10" />
+
+  
+  <!-- 딜레이 추가 -->
+  <node pkg="timed_roslaunch" type="timed_roslaunch.sh" name="timed_launch"
+        args="6 omo_r1_navigation omo_r1_navigation_G2.launch"/>
+  
+  <!-- 딜레이 후 omo_r1_navigation_rviz.launch 실행 -->
+  <node pkg="timed_roslaunch" type="timed_roslaunch.sh" name="timed_launch_rviz"
+        args="8 omo_r1_navigation omo_r1_navigation_rviz.launch"/>
+
 </launch>

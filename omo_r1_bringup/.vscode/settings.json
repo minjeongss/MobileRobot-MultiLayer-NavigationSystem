@@ -1,0 +1,16 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/jmlee/tracer_ws/devel/lib/python3/dist-packages",
+        "/home/jmlee/omo_ws/devel/lib/python3/dist-packages",
+        "/home/jmlee/catkin_ws/devel/lib/python3/dist-packages",
+        "/home/jmlee/robot_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/jmlee/tracer_ws/devel/lib/python3/dist-packages",
+        "/home/jmlee/omo_ws/devel/lib/python3/dist-packages",
+        "/home/jmlee/catkin_ws/devel/lib/python3/dist-packages",
+        "/home/jmlee/robot_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ]
+}

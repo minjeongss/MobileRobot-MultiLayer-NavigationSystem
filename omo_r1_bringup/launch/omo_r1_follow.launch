@@ -1,6 +1,17 @@
+
 <launch>
-  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
-  <node name="cmd_pose" pkg="omo_r1_bringup" type="detectNmove.py" output="screen" />
+    <!-- RealSense D455i 카메라 노드 추가 -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <!-- <arg name="filters" value="pointcloud" /> -->
+    <arg name="camera" value="camera2" />
+    <arg name="serial_no" value="151422255139" />
+    <arg name="align_depth" value="true" />
+    <arg name="publish_tf" value="true" />
+    <!-- <arg name="enable_sync" default="true"/> -->
+  </include>
+
+  
+  <!--<node name="sequence_runner" pkg="omo_r1_bringup" type="run_sequence.py" output="screen" /> -->
   <include file="$(find apriltag_ros)/launch/continuous_detection.launch" />
   <include file="$(find omo_r1_bringup)/launch/omo_r1_robot_G2.launch" />
   <include file="$(find omo_r1_bringup)/launch/omo_r1_remote_G2.launch"/>

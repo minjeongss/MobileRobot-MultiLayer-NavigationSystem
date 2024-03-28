@@ -1,0 +1,7 @@
+
+<launch>
+
+  <node name="sequence_runner" pkg="omo_r1_bringup" type="run_sequence.py" output="screen" />
+
+</launch>
+
