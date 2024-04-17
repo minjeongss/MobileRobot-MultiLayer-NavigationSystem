@@ -18,7 +18,7 @@ class TurnLeft:
         turn_msg.angular.z = math.radians(45)  # Set rotation speed to 45 degrees per second
 
         # Calculate the time required to complete a 90 degree turn
-        turn_time = math.radians(90) / turn_msg.angular.z
+        turn_time = math.radians(85) / turn_msg.angular.z
 
         # Start turning
         start_time = time.time()

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#5층 엘리베이터 앞에서 tag 보고 정렬하는 코드
 
 import rospy
 import tf
@@ -17,25 +18,26 @@ class cmd_pose:
     def callback(self, tag):
         if tag.detections:
             try:
-                self.listener.waitForTransform('/base_link', '/num1', rospy.Time(0), rospy.Duration(5.0))
-                (trans, rot) = self.listener.lookupTransform('/base_link', '/num1', rospy.Time(0))
+                self.listener.waitForTransform('/base_link', '/num7', rospy.Time(0), rospy.Duration(5.0))
+                (trans, rot) = self.listener.lookupTransform('/base_link', '/num7', rospy.Time(0))
                 x = trans[0]
                 y = trans[1]
                 z = trans[2]
 
                 distance = math.sqrt(x ** 2 + y ** 2)
-                target_distance = 1.6# Target distance in meters
+                target_distance = 1.5 # Target distance in meters
                 angular = math.atan2(y, x)
 
-                linear = 0.35 * (distance - target_distance)
-                
-                if distance >1.7:
-                    linear = 0.35
-                
-                if abs(distance - target_distance) < 0.01:  # If the robot is close to the target distance
-                    linear = 0
+                if angular < -0.0:
+                    angular = angular * 1.2
+                elif angular > 0.0:
+                    angular = angular * 1.2
+                linear = 0.4 * (distance - target_distance)
 
-                if abs(angular) < 0.003:  # If the robot is facing the target direction
+                # Adjust speeds based on distance and angle
+                if abs(distance - target_distance) < 0.03:  # If the robot is close to the target distance
+                    linear = 0
+                if abs(angular) < 0.001:  # If the robot is facing the target direction
                     angular = 0
 
                 # Velocity command

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+#엘리베이터 앞에서 apriltag 보고 정렬하는 코드
 import rospy
 import tf
 from geometry_msgs.msg import Twist

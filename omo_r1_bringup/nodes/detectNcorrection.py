@@ -229,7 +229,6 @@ if __name__=='__main__':
         ic.loop()
     except KeyboardInterrupt:
         print("Shutting down")
-접기
 
 
 

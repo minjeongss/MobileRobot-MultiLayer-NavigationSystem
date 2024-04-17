@@ -8,12 +8,15 @@ def run_nodes(node_list, package_name):
         subprocess.run(["rosrun", package_name, node])
 
 # 첫 번째로 실행할 노드 리스트 및 패키지 이름
-first_run_nodes = ["set_initial_pose.py", "movegoal1.py"]
-first_run_package = "omo_r1_navigation"
+first_run_nodes = ["final_movenode.py"]
+first_run_package = "omo_r1_bringup"
 
 # press_button_out 노드 정보
-press_button_node = "press_button_out"
+press_button_out_node = "press_button_out"
+press_button_in_node = "press_button_in"
 press_button_package = "d435i_xarm_setup"
+
+
 
 # 두 번째로 실행할 노드 리스트 및 패키지 이름
 second_run_nodes = ["movegoal2.py"]
@@ -27,18 +30,18 @@ third_run_package = "omo_r1_bringup"
 run_nodes(first_run_nodes, first_run_package)
 
 # press_button_out 노드 실행
-time.sleep(3)  # 필요한 경우에 따라 대기 시간 조정
-subprocess.run(["rosrun", press_button_package, press_button_node])
+time.sleep(2)  # 필요한 경우에 따라 대기 시간 조정
+subprocess.run(["rosrun", press_button_package, press_button_in_node])
 
 # 'rosservice call /move_base/clear_costmaps "{}"' 명령어 실행
-subprocess.run(["rosservice", "call", "/move_base/clear_costmaps", "{}"])
+#subprocess.run(["rosservice", "call", "/move_base/clear_costmaps", "{}"])
 
 # 두 번째 노드 리스트 실행
-time.sleep(1)  # 필요한 경우에 따라 대기 시간 조정
-run_nodes(second_run_nodes, second_run_package)
+#time.sleep(1)  # 필요한 경우에 따라 대기 시간 조정
+#run_nodes(second_run_nodes, second_run_package)
 
 # 세 번째 노드 리스트 실행
-run_nodes(third_run_nodes, third_run_package)
+#run_nodes(third_run_nodes, third_run_package)
 
 #time.sleep(1)
 #run_nodes(third_run_nodes)
