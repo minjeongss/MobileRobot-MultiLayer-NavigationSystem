@@ -10,6 +10,7 @@
   <param
     name="use_gui"
     value="$(arg gui)" />
+    <group ns="omo">
   <node
     name="joint_state_publisher"
     pkg="joint_state_publisher"
@@ -18,6 +19,7 @@
     name="robot_state_publisher"
     pkg="robot_state_publisher"
     type="state_publisher" />
+    </group>
  <node name="ydlidar_node"  pkg="ydlidar_ros"  type="ydlidar_node" output="screen">
     <param name="port"         type="string" value="/dev/ydlidar"/>  
     <param name="baudrate"     type="int"    value="115200"/>
