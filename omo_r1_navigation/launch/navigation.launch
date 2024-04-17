@@ -1,20 +1,21 @@
 <launch>
   <!-- Realsense 카메라 설정, camera1과 camera2로 구분 -->
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="filters" value="pointcloud" />
     <arg name="camera" value="camera1" />
     <arg name="serial_no" value="141722076596" />
     <arg name="align_depth" value="true" />
     <arg name="publish_tf" value="true" />
   </include>
-  
+  <!--
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">
     <arg name="camera" value="camera2" />
     <arg name="serial_no" value="151422255139" />
     <arg name="align_depth" value="true" />
     <arg name="publish_tf" value="true" />
-  </include>
-    <!-- Apriltag detection -->
-  <include file="$(find apriltag_ros)/launch/continuous_detection.launch" />
+  </include>-->
+    <!-- Apriltag detection 
+  <include file="$(find apriltag_ros)/launch/continuous_detection.launch" />-->
 
   <!-- d435i_xarm_setup 설정 -->
   <arg name="robot_ip" default="192.168.1.178" />
@@ -41,17 +42,18 @@
 
   <!-- omo_r1_robot_G2.launch 실행 -->
   <include file="$(find omo_r1_bringup)/launch/omo_r1_robot_G2.launch"/>
+  <include file="$(find omo_r1_bringup)/launch/omo_r1_remote_G2.launch"/>
 
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_link_base" args="-0.295 -0.15 0.9 -1.57 0 0 base_link link_base 1" />
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_link_base" args="-0.295 -0.15 0.9 0 0 0 base_link link_base 10" />
-
+  <!--<node name="sequence_runner" pkg="omo_r1_bringup" type="run_sequence.py" output="screen" />-->
   
-  <!-- 딜레이 추가 -->
+  <!-- 딜레이 추가 
   <node pkg="timed_roslaunch" type="timed_roslaunch.sh" name="timed_launch"
         args="6 omo_r1_navigation omo_r1_navigation_G2.launch"/>
   
-  <!-- 딜레이 후 omo_r1_navigation_rviz.launch 실행 -->
+  딜레이 후 omo_r1_navigation_rviz.launch 실행 
   <node pkg="timed_roslaunch" type="timed_roslaunch.sh" name="timed_launch_rviz"
-        args="8 omo_r1_navigation omo_r1_navigation_rviz.launch"/>
+        args="8 omo_r1_navigation omo_r1_navigation_rviz.launch"/> -->
 
 </launch>

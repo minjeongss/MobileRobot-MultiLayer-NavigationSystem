@@ -1,7 +1,7 @@
-image: HT3.pgm
-
+image: map0402.pgm
 resolution: 0.050000
-origin: [-79.300000, -28.300000, 0.000000]
+origin: [-4.800000, -1.600000, 0.000000]
 negate: 0
 occupied_thresh: 0.65
 free_thresh: 0.196
+

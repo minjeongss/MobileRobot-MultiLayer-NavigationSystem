@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import rospy
 from geometry_msgs.msg import PoseStamped, Twist
 from nav_msgs.msg import Odometry
@@ -17,28 +18,20 @@ class MoveToGoal:
         self.goal_msg.pose.position.y = y
         self.goal_msg.pose.orientation.w = 1.0  # 머리 방향은 기본적으로 정면으로 향하도록 설정
         self.flag=0
-        print("[1] setup goal")
     def move_to_goal(self):
         rate = rospy.Rate(5)  # 5Hz로 설정, 20Hz는 불가능, 기존 설정은 10Hz
         while not rospy.is_shutdown():
-            print("[2] setup robot pose")
             self.pub.publish(self.goal_msg)
             rate.sleep()
     def cmd_vel_callback(self, msg):
         # cmd_vel 값을 받아와서 속도가 0인지 확인하여 종료
         if msg.linear.x == 0 and msg.angular.z == 0:
             self.flag+=1
-            print("[3] calculate velocity: ",self.flag," time!")
             if self.flag==10:
-                print("[4] finish navigation")
                 rospy.signal_shutdown("Robot reached goal")
                 rospy.sleep(1) 
 if __name__ == '__main__':
     try:
-        # 이동할 좌표 설정
-        #filename="/home/minjeong/catkin_ws/src/apriltag_pose.json"
-        #with open(filename, 'r') as file:
-        #    data=json.load(file)
         goal_x = 7.70566
         goal_y = -8.42377
         # 목표 지점으로 이동 명령 발행
